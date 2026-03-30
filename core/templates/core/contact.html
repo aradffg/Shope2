@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+{% block meta_description %}Get in touch with ElectroStore. We'd love to hear from you — questions, feedback, or just to say hello.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="contact" id="contact-section">
+    <div class="container">
+        <div class="contact__grid">
+            <!-- Info Side -->
+            <div class="contact__info reveal">
+                <span class="contact__overline">Get In Touch</span>
+                <h1 class="contact__title">Let's Start a<br>Conversation</h1>
+                <p class="contact__description">
+                    Have a question about a product? Need help with an order? Or just want to say hello?
+                    We're here and ready to help.
+                </p>
+
+                <div class="contact__details">
+                    <div class="contact__detail">
+                        <span class="contact__detail-icon">📧</span>
+                        <div>
+                            <div class="contact__detail-label">Email</div>
+                            <div class="contact__detail-value">hello@electrostore.com</div>
+                        </div>
+                    </div>
+                    <div class="contact__detail">
+                        <span class="contact__detail-icon">📱</span>
+                        <div>
+                            <div class="contact__detail-label">Phone</div>
+                            <div class="contact__detail-value">+1 (555) 123-4567</div>
+                        </div>
+                    </div>
+                    <div class="contact__detail">
+                        <span class="contact__detail-icon">📍</span>
+                        <div>
+                            <div class="contact__detail-label">Location</div>
+                            <div class="contact__detail-value">San Francisco, CA</div>
+                        </div>
+                    </div>
+                    <div class="contact__detail">
+                        <span class="contact__detail-icon">⏰</span>
+                        <div>
+                            <div class="contact__detail-label">Hours</div>
+                            <div class="contact__detail-value">Mon – Fri, 9am – 6pm PST</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Side -->
+            <div class="contact__form-wrap reveal">
+                <h2 class="contact__form-title">Send us a message</h2>
+
+                <form method="post" action="{% url 'core:contact' %}" id="contact-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="form__group">
+                        <label for="contact-name" class="form__label">Full Name</label>
+                        {% if form.name.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.name.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <input type="text"
+                               name="{{ form.name.html_name }}"
+                               id="contact-name"
+                               class="form__input {% if form.name.errors %}error{% endif %}"
+                               placeholder="Your Name"
+                               value="{{ form.name.value|default:'' }}"
+                               required>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-email" class="form__label">Email Address</label>
+                        {% if form.email.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <input type="email"
+                               name="{{ form.email.html_name }}"
+                               id="contact-email"
+                               class="form__input {% if form.email.errors %}error{% endif %}"
+                               placeholder="your@email.com"
+                               value="{{ form.email.value|default:'' }}"
+                               required>
+                    </div>
+
+                    <div class="form__group">
+                        <label for="contact-message" class="form__label">Message</label>
+                        {% if form.message.errors %}
+                        <ul class="errorlist">
+                            {% for error in form.message.errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <textarea name="{{ form.message.html_name }}"
+                                  id="contact-message"
+                                  class="form__input {% if form.message.errors %}error{% endif %}"
+                                  placeholder="Tell us what's on your mind..."
+                                  rows="5"
+                                  required>{{ form.message.value|default:'' }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--large" id="contact-submit" style="width: 100%;">
+                        Send Message
+                        <span class="btn__arrow">→</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/contact.js' %}"></script>
+{% endblock %}

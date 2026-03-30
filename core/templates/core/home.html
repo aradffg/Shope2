@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+{% block meta_description %}ElectroStore — Premium electronics for the modern world. Discover the latest phones, laptops, and accessories curated for tech enthusiasts.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block navbar_class %}navbar--transparent{% endblock %}
+
+{% block content %}
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero" id="hero-section">
+    <div class="container hero__inner">
+        <div class="hero__content">
+            <!-- Overline badge -->
+            <div class="hero__overline">
+                <span class="hero__overline-dot"></span>
+                New Collection 2026
+            </div>
+
+            <h1 class="hero__title">
+                The Future of<br>
+                <span class="hero__title-accent">Electronics</span>
+            </h1>
+
+            <p class="hero__description">
+                Curated premium tech for the modern world. From cutting-edge smartphones to powerful laptops — discover devices designed to elevate your everyday.
+            </p>
+
+            <div class="hero__actions">
+                <a href="{% url 'products:product_list' %}" class="btn btn--primary btn--large">
+                    Browse Products
+                    <span class="btn__arrow">→</span>
+                </a>
+                <a href="{% url 'core:about' %}" class="btn btn--secondary btn--large" style="border-color: rgba(255,255,255,0.15); color: var(--text-on-dark);">
+                    Our Story
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="hero__stats">
+                <div class="hero__stat">
+                    <div class="hero__stat-number">200+</div>
+                    <div class="hero__stat-label">Products</div>
+                </div>
+                <div class="hero__stat">
+                    <div class="hero__stat-number">50k+</div>
+                    <div class="hero__stat-label">Happy Customers</div>
+                </div>
+                <div class="hero__stat">
+                    <div class="hero__stat-number">4.9★</div>
+                    <div class="hero__stat-label">Average Rating</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero__image-wrap">
+            <div class="hero__image-glow"></div>
+            <img src="{% static 'images/hero-device.png' %}" alt="Premium electronics device" class="hero__image" id="hero-image">
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== FEATURED PRODUCTS ==================== -->
+<section class="section featured" id="featured-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__overline">Handpicked for You</span>
+            <h2 class="section__title">Featured Products</h2>
+            <p class="section__subtitle">Our most popular devices, chosen by thousands of tech enthusiasts worldwide.</p>
+        </div>
+
+        <div class="products-grid reveal-stagger reveal">
+            {% for product in featured_products %}
+            <article class="product-card" id="product-card-{{ product.pk }}">
+                <a href="{{ product.get_absolute_url }}" class="product-card__link" aria-label="View {{ product.title }}"></a>
+                <div class="product-card__image-wrap">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-card__image" loading="lazy">
+                    {% else %}
+                    <div class="product-card__image-placeholder">📦</div>
+                    {% endif %}
+                    {% if product.featured %}
+                    <span class="product-card__badge">Featured</span>
+                    {% endif %}
+                </div>
+                <div class="product-card__body">
+                    <span class="product-card__category">{{ product.category.name }}</span>
+                    <h3 class="product-card__title">{{ product.title }}</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-currency">$</span>{{ product.price }}
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <p style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary); padding: var(--space-2xl);">
+                No featured products yet. Check back soon!
+            </p>
+            {% endfor %}
+        </div>
+
+        {% if featured_products %}
+        <div style="text-align: center; margin-top: var(--space-2xl);" class="reveal">
+            <a href="{% url 'products:product_list' %}" class="btn btn--secondary">
+                View All Products
+                <span class="btn__arrow">→</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+
+<!-- ==================== CATEGORIES ==================== -->
+<section class="section categories-section" id="categories-section">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__overline">Browse by Type</span>
+            <h2 class="section__title">Shop by Category</h2>
+            <p class="section__subtitle">Find exactly what you're looking for.</p>
+        </div>
+
+        <div class="categories-grid reveal-stagger reveal">
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_url }}" class="category-card" id="category-card-{{ category.slug }}">
+                <span class="category-card__icon">{{ category.icon|default:"📱" }}</span>
+                <span class="category-card__name">{{ category.name }}</span>
+                <span class="category-card__count">{{ category.products.count }} product{{ category.products.count|pluralize }}</span>
+            </a>
+            {% empty %}
+            <p style="grid-column: 1 / -1; text-align: center; color: var(--text-secondary);">
+                Categories coming soon!
+            </p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<!-- ==================== CTA BANNER ==================== -->
+<section class="section section--dark cta-banner" id="cta-section">
+    <div class="container">
+        <div class="cta-banner__inner reveal">
+            <h2 class="cta-banner__title">Ready to upgrade your tech?</h2>
+            <p class="cta-banner__subtitle">Browse our curated collection and find the perfect device for your lifestyle.</p>
+            <a href="{% url 'products:product_list' %}" class="btn btn--primary btn--large">
+                Explore All Products
+                <span class="btn__arrow">→</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

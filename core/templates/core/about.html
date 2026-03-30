@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+{% block meta_description %}Learn about ElectroStore — our mission, values, and passion for curating premium electronics for the modern world.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Banner -->
+<section class="about-hero" id="about-hero">
+    <div class="container">
+        <h1 class="about-hero__title reveal">About <span class="accent">ElectroStore</span></h1>
+        <p class="about-hero__subtitle reveal">We believe technology should be beautiful, accessible, and designed to elevate your everyday experiences.</p>
+    </div>
+</section>
+
+<!-- Brand Story -->
+<section class="about-story" id="about-story">
+    <div class="container">
+        <div class="about-story__inner">
+            <div class="section__header reveal">
+                <span class="section__overline">Our Story</span>
+                <h2 class="section__title">Born from Passion</h2>
+            </div>
+
+            <p class="about-story__text reveal">
+                ElectroStore was founded with a simple belief: everyone deserves access to premium technology. We started as a small team of tech enthusiasts frustrated by the overwhelming noise in consumer electronics — too many choices, too little curation.
+            </p>
+            <p class="about-story__text reveal">
+                So we built something different. A place where every product is handpicked, every detail matters, and the experience of discovering new tech feels as premium as the products themselves.
+            </p>
+            <p class="about-story__text reveal">
+                Today, we serve thousands of customers worldwide, offering a carefully curated selection of the finest phones, laptops, and accessories from the world's leading brands.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Values -->
+<section class="about-values" id="about-values">
+    <div class="container">
+        <div class="section__header reveal">
+            <span class="section__overline">What Drives Us</span>
+            <h2 class="section__title">Our Values</h2>
+        </div>
+
+        <div class="values-grid reveal-stagger reveal">
+            <div class="value-card">
+                <div class="value-card__icon">✨</div>
+                <h3 class="value-card__title">Quality First</h3>
+                <p class="value-card__text">Every product in our store passes rigorous quality checks. We only sell what we'd use ourselves.</p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-card__icon">🎯</div>
+                <h3 class="value-card__title">Curated Selection</h3>
+                <p class="value-card__text">Less noise, more signal. We handpick the best devices so you don't have to wade through thousands of options.</p>
+            </div>
+
+            <div class="value-card">
+                <div class="value-card__icon">💎</div>
+                <h3 class="value-card__title">Premium Experience</h3>
+                <p class="value-card__text">From browsing to unboxing, every touchpoint is designed to feel premium and delightful.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

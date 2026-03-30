@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/orders.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="checkout-section section">
+    <div class="container">
+        <div class="section__header reveal">
+            <h1 class="section__title">Secure Checkout</h1>
+        </div>
+
+        <div class="checkout-grid reveal">
+            <!-- Order Summary (Right on Desktop, Top on Mobile) -->
+            <div class="checkout-summary shadow-card">
+                <h3 class="checkout-summary__title">Order Summary</h3>
+                <div class="checkout-summary__items">
+                    {% for item in cart %}
+                    <div class="checkout-item">
+                        <div class="checkout-item__info">
+                            <span class="checkout-item__qty">{{ item.quantity }}x</span>
+                            <span class="checkout-item__title">{{ item.product.title }}</span>
+                        </div>
+                        <span class="checkout-item__price">${{ item.total_price }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <div class="checkout-summary__totals">
+                    <div class="checkout-total-row">
+                        <span>Subtotal</span>
+                        <span>${{ cart.get_total_price }}</span>
+                    </div>
+                    <div class="checkout-total-row">
+                        <span>Shipping Free</span>
+                        <span>$0.00</span>
+                    </div>
+                    <div class="checkout-total-row checkout-total-row--final">
+                        <span>Total Due</span>
+                        <span>${{ cart.get_total_price }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Checkout Form -->
+            <div class="checkout-form-container shadow-card">
+                <h3 class="checkout-form__title">Shipping & Payment</h3>
+                <form method="post" class="checkout-form" id="checkout-form">
+                    {% csrf_token %}
+                    
+                    <div class="form-row">
+                        <div class="form__group">
+                            <label for="{{ form.first_name.id_for_label }}" class="form__label">First Name</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form__group">
+                            <label for="{{ form.last_name.id_for_label }}" class="form__label">Last Name</label>
+                            {{ form.last_name }}
+                        </div>
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="{{ form.email.id_for_label }}" class="form__label">Email Address</label>
+                        {{ form.email }}
+                    </div>
+                    
+                    <div class="form__group">
+                        <label for="{{ form.address.id_for_label }}" class="form__label">Street Address</label>
+                        {{ form.address }}
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form__group">
+                            <label for="{{ form.city.id_for_label }}" class="form__label">City</label>
+                            {{ form.city }}
+                        </div>
+                        <div class="form__group">
+                            <label for="{{ form.postal_code.id_for_label }}" class="form__label">Postal Code</label>
+                            {{ form.postal_code }}
+                        </div>
+                    </div>
+
+                    <div class="payment-simulation">
+                        <p class="payment-title">Payment Method</p>
+                        <div class="payment-badge">
+                            <span class="icon">💳</span> Secure Payment Simulation
+                        </div>
+                        <p class="form__help">This is a portfolio project. Clicking checkout will simulate a successful payment process without requiring a real card.</p>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary btn--full btn--large" style="margin-top: var(--space-xl);">Complete Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
