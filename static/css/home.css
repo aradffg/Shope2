@@ -1,0 +1,265 @@
+/* ============================================================
+   ElectroStore — Home Page CSS
+   Hero section, featured products, category preview
+   ============================================================ */
+
+/* ==================== HERO ==================== */
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    overflow: hidden;
+    padding-top: var(--navbar-height);
+}
+
+/* Subtle gradient overlay */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        ellipse at 30% 50%,
+        rgba(37, 99, 235, 0.08) 0%,
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+/* Grid pattern overlay */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+}
+
+.hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--space-3xl);
+    position: relative;
+    z-index: 1;
+}
+
+.hero__content {
+    max-width: 580px;
+}
+
+.hero__overline {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--accent-light);
+    margin-bottom: var(--space-xl);
+    backdrop-filter: blur(8px);
+}
+
+.hero__overline-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--neon-green);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.hero__title {
+    font-size: var(--font-size-5xl);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-lg);
+}
+
+.hero__title-accent {
+    background: linear-gradient(135deg, var(--accent-light), var(--neon-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero__description {
+    font-size: var(--font-size-md);
+    color: var(--text-on-dark-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+    max-width: 460px;
+}
+
+.hero__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.hero__stats {
+    display: flex;
+    gap: var(--space-2xl);
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero__stat-number {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    color: var(--text-on-dark);
+}
+
+.hero__stat-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-on-dark-secondary);
+    margin-top: var(--space-xs);
+}
+
+/* Hero Image Side */
+.hero__image-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero__image {
+    width: 100%;
+    max-width: 520px;
+    border-radius: var(--radius-xl);
+    /* Floating animation */
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Glow behind hero image */
+.hero__image-glow {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.2) 0%, transparent 70%);
+    filter: blur(60px);
+    z-index: -1;
+}
+
+
+/* ==================== FEATURED PRODUCTS ==================== */
+.featured {
+    background: var(--bg-primary);
+}
+
+
+/* ==================== CATEGORIES PREVIEW ==================== */
+.categories-section {
+    background: var(--bg-secondary);
+}
+
+
+/* ==================== CTA BANNER ==================== */
+.cta-banner {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    text-align: center;
+}
+
+.cta-banner__inner {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-banner__title {
+    font-size: var(--font-size-3xl);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-md);
+}
+
+.cta-banner__subtitle {
+    font-size: var(--font-size-md);
+    color: var(--text-on-dark-secondary);
+    margin-bottom: var(--space-xl);
+}
+
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .hero {
+        min-height: auto;
+        padding: calc(var(--navbar-height) + var(--space-2xl)) 0 var(--space-2xl);
+    }
+
+    .hero__inner {
+        grid-template-columns: 1fr;
+        gap: var(--space-2xl);
+        text-align: center;
+    }
+
+    .hero__content {
+        max-width: 100%;
+    }
+
+    .hero__description {
+        max-width: 100%;
+    }
+
+    .hero__actions {
+        justify-content: center;
+    }
+
+    .hero__stats {
+        justify-content: center;
+    }
+
+    .hero__image-wrap {
+        order: -1;
+    }
+
+    .hero__image {
+        max-width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero__title {
+        font-size: var(--font-size-4xl);
+    }
+    .hero__stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-lg);
+        text-align: center;
+    }
+
+    .hero__actions {
+        flex-direction: column;
+    }
+
+    .hero__actions .btn {
+        width: 100%;
+    }
+}

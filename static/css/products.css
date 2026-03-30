@@ -1,0 +1,28 @@
+/* ============================================================
+   ElectroStore — Products Page CSS
+   ============================================================ */
+
+.products-page {
+    padding-bottom: var(--space-3xl);
+}
+
+.products-page .filter-tabs {
+    padding-top: var(--space-xl);
+}
+
+/* Empty state */
+.products-empty {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+}
+
+.products-empty__icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-lg);
+}
+
+.products-empty__text {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+}

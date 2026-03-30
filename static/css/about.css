@@ -1,0 +1,128 @@
+/* ============================================================
+   ElectroStore — About Page CSS
+   ============================================================ */
+
+/* Hero Banner */
+.about-hero {
+    position: relative;
+    padding: calc(var(--navbar-height) + var(--space-3xl)) 0 var(--space-3xl);
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+    text-align: center;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.about-hero__title {
+    font-size: var(--font-size-4xl);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
+}
+
+.about-hero__subtitle {
+    font-size: var(--font-size-md);
+    color: var(--text-on-dark-secondary);
+    margin-top: var(--space-lg);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 1;
+}
+
+/* Story Section */
+.about-story {
+    padding: var(--section-padding);
+}
+
+.about-story__inner {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.about-story__text {
+    font-size: var(--font-size-md);
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: var(--space-lg);
+}
+
+.about-story__text:last-child {
+    margin-bottom: 0;
+}
+
+/* Values Section */
+.about-values {
+    padding: var(--section-padding);
+    background: var(--bg-secondary);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+}
+
+.value-card {
+    background: var(--surface);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    border: 1px solid var(--border);
+    transition: transform var(--transition-slow), box-shadow var(--transition-slow), background var(--transition-slow);
+}
+
+.value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    background: var(--surface-hover);
+}
+
+.value-card__icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-lg);
+}
+
+.value-card__title {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+}
+
+.value-card__text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 768px) {
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-hero__title {
+        font-size: var(--font-size-2xl);
+    }
+    .value-card {
+        padding: var(--space-xl);
+    }
+}

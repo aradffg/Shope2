@@ -1,0 +1,169 @@
+/* ============================================================
+   ElectroStore — Users (Auth & Dashboard) CSS
+   ============================================================ */
+
+.auth-section {
+    min-height: calc(100vh - 80px); /* minus navbar */
+    display: flex;
+    align-items: center;
+    background: var(--bg-secondary);
+}
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.auth-card {
+    background: var(--surface);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    max-width: 440px;
+    border: 1px solid var(--border);
+}
+
+.auth-card__title {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    margin-bottom: var(--space-xs);
+    text-align: center;
+}
+
+.auth-card__subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-form__error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #FCA5A5;
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-md);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.auth-link {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.auth-card__footer {
+    margin-top: var(--space-xl);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.form__help {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.form__help ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 4px 0 0 0;
+}
+
+/* Dashboard */
+.dashboard-section {
+    padding-top: var(--space-2xl);
+    padding-bottom: var(--space-3xl);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.dashboard__title {
+    font-size: var(--font-size-3xl);
+    margin: 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-xl);
+    align-items: start;
+}
+
+.dashboard-card {
+    background: var(--surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+.dashboard-card__title {
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border);
+    margin: 0;
+    background: var(--bg-secondary);
+    font-weight: 600;
+}
+
+.dashboard-card__body {
+    padding: var(--space-lg);
+}
+
+.dashboard-card__body p {
+    margin-bottom: var(--space-sm);
+}
+
+.dashboard-empty {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    color: var(--text-secondary);
+}
+
+.dashboard-empty .icon {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+    opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: var(--space-xl);
+        border: none; /* Look cleaner on small screens */
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+    
+    .auth-section {
+        align-items: flex-start;
+        padding-top: var(--space-xl);
+    }
+}

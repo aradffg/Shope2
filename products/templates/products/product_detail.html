@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ product.title }}{% endblock %}
+{% block meta_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="detail" id="product-detail">
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="detail__breadcrumb" id="breadcrumb" aria-label="Breadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <span class="detail__breadcrumb-sep">/</span>
+            <a href="{% url 'products:product_list' %}">Products</a>
+            <span class="detail__breadcrumb-sep">/</span>
+            <a href="{% url 'products:product_list' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
+            <span class="detail__breadcrumb-sep">/</span>
+            <span>{{ product.title }}</span>
+        </nav>
+
+        <!-- Product Grid -->
+        <div class="detail__grid reveal">
+            <!-- Image -->
+            <div class="detail__image-wrap" id="product-image-wrap">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.title }}" class="detail__image">
+                {% else %}
+                <div class="detail__image-placeholder">📦</div>
+                {% endif %}
+            </div>
+
+            <!-- Info -->
+            <div class="detail__info" id="product-info">
+                <span class="detail__category">{{ product.category.name }}</span>
+
+                <h1 class="detail__title">{{ product.title }}</h1>
+
+                <div class="detail__price">
+                    <span class="detail__price-currency">$</span>{{ product.price }}
+                </div>
+                
+                <div class="product-rating" style="margin-top: 0.5rem; color: #F59E0B; font-weight: 600;">
+                    ★ {{ product.get_average_rating|floatformat:1 }} <span style="color:var(--text-secondary); font-size: 0.9em; font-weight: 400;">({{ product.reviews.count }} reviews)</span>
+                </div>
+
+                <hr class="detail__divider">
+
+                <p class="detail__description-label">Description</p>
+                <p class="detail__description">{{ product.description }}</p>
+
+                <div class="detail__actions">
+                    <button type="button" class="btn btn--primary btn--large js-add-to-cart" id="add-to-cart-btn" data-id="{{ product.id }}">
+                        Add to Cart
+                        <span class="btn__arrow">→</span>
+                    </button>
+                    <button type="button" class="btn btn--secondary btn--large js-wishlist-toggle" data-id="{{ product.id }}">
+                        {% if in_wishlist %}❤️ Saved{% else %}🤍 Save for later{% endif %}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="reviews-section" style="margin-top: var(--space-3xl); border-top: 1px solid var(--border); padding-top: var(--space-2xl);">
+            <div class="section__header">
+                <h2 class="section__title">Customer Reviews</h2>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr; gap: var(--space-xl); @media (min-width: 768px){ grid-template-columns: 1fr 2fr; }">
+                <!-- Review Form -->
+                <div class="review-form-container shadow-card" style="padding: var(--space-lg); background: var(--bg-primary); border: 1px solid var(--border); border-radius: var(--radius-md); height: fit-content;">
+                    {% if user.is_authenticated %}
+                        <h3 style="margin-top:0; font-size: var(--font-size-lg);">Write a Review</h3>
+                        <form method="post" action="{% url 'products:product_detail' product.slug %}">
+                            {% csrf_token %}
+                            {% for field in review_form %}
+                            <div class="form__group">
+                                <label class="form__label">{{ field.label }}</label>
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                            <button type="submit" class="btn btn--primary btn--full">Submit Review</button>
+                        </form>
+                    {% else %}
+                        <div style="text-align: center; padding: var(--space-xl) 0;">
+                            <p style="color: var(--text-secondary); margin-bottom: var(--space-md);">You must be logged in to leave a review.</p>
+                            <a href="{% url 'users:login' %}?next={{ request.path }}" class="btn btn--secondary">Sign In</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Review List -->
+                <div class="reviews-list">
+                    {% for review in product.reviews.all %}
+                    <div class="review-card" style="padding: var(--space-md); border-bottom: 1px solid var(--border); margin-bottom: var(--space-md);">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-xs);">
+                            <strong style="font-size: var(--font-size-md);">{{ review.user.first_name|default:review.user.username }}</strong>
+                            <span style="color: #F59E0B;">
+                                {% with ''|center:review.rating as range %}
+                                {% for _ in range %}★{% endfor %}
+                                {% endwith %}
+                            </span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: var(--font-size-sm); margin-bottom: var(--space-sm);">{{ review.created_at|date:"M j, Y" }}</p>
+                        <p>{{ review.comment }}</p>
+                    </div>
+                    {% empty %}
+                    <p style="color: var(--text-secondary); text-align:center; padding: 2rem;">No reviews yet. Be the first to review this product!</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        {% if related_products %}
+        <div class="related-section" id="related-products">
+            <div class="section__header reveal">
+                <span class="section__overline">You might also like</span>
+                <h2 class="section__title">Related Products</h2>
+            </div>
+
+            <div class="products-grid reveal-stagger reveal">
+                {% for related in related_products %}
+                <article class="product-card" id="related-{{ related.pk }}">
+                    <a href="{{ related.get_absolute_url }}" class="product-card__link" aria-label="View {{ related.title }}"></a>
+                    <div class="product-card__image-wrap">
+                        {% if related.image %}
+                        <img src="{{ related.image.url }}" alt="{{ related.title }}" class="product-card__image" loading="lazy">
+                        {% else %}
+                        <div class="product-card__image-placeholder">📦</div>
+                        {% endif %}
+                    </div>
+                    <div class="product-card__body">
+                        <span class="product-card__category">{{ related.category.name }}</span>
+                        <h3 class="product-card__title">{{ related.title }}</h3>
+                        <div class="product-card__price">
+                            <span class="product-card__price-currency">$</span>{{ related.price }}
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

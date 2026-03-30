@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Products{% endblock %}
+{% block meta_description %}Browse our premium collection of phones, laptops, and accessories. Find the perfect tech for your lifestyle at ElectroStore.{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<div class="page-header" id="products-header">
+    <div class="container">
+        <h1 class="page-header__title">Our Products</h1>
+        <p class="page-header__subtitle">
+            {% if active_category %}
+            Showing {{ active_category.name }}
+            {% else %}
+            Premium electronics, curated for you
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<!-- Products Section -->
+<section class="section products-page" id="products-section">
+    <div class="container">
+        <!-- Category Filter Tabs -->
+        <div class="filter-tabs reveal" id="filter-tabs">
+            <a href="{% url 'products:product_list' %}"
+               class="filter-tab {% if not active_category %}active{% endif %}"
+               data-category="all">
+                All
+            </a>
+            {% for cat in categories %}
+            <a href="{% url 'products:product_list' %}?category={{ cat.slug }}"
+               class="filter-tab {% if active_category.slug == cat.slug %}active{% endif %}"
+               data-category="{{ cat.slug }}">
+                {{ cat.name }}
+            </a>
+            {% endfor %}
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid reveal-stagger reveal" id="products-grid">
+            {% for product in products %}
+            <article class="product-card" id="product-{{ product.pk }}" data-category="{{ product.category.slug }}">
+                <a href="{{ product.get_absolute_url }}" class="product-card__link" aria-label="View {{ product.title }}"></a>
+                <div class="product-card__image-wrap">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" class="product-card__image" loading="lazy">
+                    {% else %}
+                    <div class="product-card__image-placeholder">📦</div>
+                    {% endif %}
+                </div>
+                <div class="product-card__body">
+                    <span class="product-card__category">{{ product.category.name }}</span>
+                    <h3 class="product-card__title">{{ product.title }}</h3>
+                    <div class="product-card__price">
+                        <span class="product-card__price-currency">$</span>{{ product.price }}
+                    </div>
+                </div>
+            </article>
+            {% empty %}
+            <div class="products-empty" style="grid-column: 1 / -1;">
+                <div class="products-empty__icon">🔍</div>
+                <p class="products-empty__text">No products found in this category.</p>
+                <a href="{% url 'products:product_list' %}" class="btn btn--primary">View All Products</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

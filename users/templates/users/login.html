@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Log In{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/users.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="auth-section section">
+    <div class="container auth-container">
+        <div class="auth-card reveal">
+            <h1 class="auth-card__title">Welcome Back</h1>
+            <p class="auth-card__subtitle">Please enter your details to sign in.</p>
+
+            <form method="POST" class="auth-form" action="{% url 'users:login' %}">
+                {% csrf_token %}
+                
+                <div class="form__group">
+                    <label for="id_username" class="form__label">Username</label>
+                    <input type="text" name="username" class="form__input" placeholder="Enter your username" required id="id_username">
+                </div>
+
+                <div class="form__group">
+                    <label for="id_password" class="form__label">Password</label>
+                    <input type="password" name="password" class="form__input" placeholder="Enter your password" required id="id_password">
+                </div>
+
+                {% if form.errors %}
+                <div class="auth-form__error">
+                    Invalid username or password. Please try again.
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn btn--primary btn--full btn--large" style="margin-top: var(--space-md);">Sign In</button>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+
+            <div class="auth-card__footer">
+                <p>Don't have an account? <a href="{% url 'users:register' %}" class="auth-link">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

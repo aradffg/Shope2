@@ -1,0 +1,24 @@
+<!-- Cart Drawer Overlay -->
+<div class="cart-overlay" id="cart-overlay"></div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer__header">
+        <h3 class="cart-drawer__title">Your Cart (<span id="cart-count-header">{{ cart|length }}</span>)</h3>
+        <button class="cart-drawer__close" id="cart-close" aria-label="Close Cart">&times;</button>
+    </div>
+    
+    <div class="cart-drawer__body" id="cart-items-container">
+        <!-- Cart items will be loaded here via AJAX -->
+        <div class="cart-drawer__loader">Loading...</div>
+    </div>
+    
+    <div class="cart-drawer__footer">
+        <div class="cart-drawer__total">
+            <span>Total</span>
+            <span id="cart-total-price">${{ cart.get_total_price }}</span>
+        </div>
+        <p class="cart-drawer__note">Shipping & taxes calculated at checkout</p>
+        <a href="{% url 'orders:order_create' %}" class="btn btn--primary btn--large" style="width: 100%;">Checkout</a>
+    </div>
+</div>
